@@ -1,10 +1,20 @@
 "use client"
 import Image from "next/image"
+import { useState } from "react"
 import { useCryptoList } from "@/hooks/useCryptoList"
 import { CryptoCard } from "@/components/CryptoCard"
+import { Pagination } from "@/components/Pagination"
+
+const PER_PAGE = 10
 
 export default function Crypto() {
-	const { data, isLoading, error } = useCryptoList()
+	const [page, setPage] = useState(1)
+	const { data, isLoading, error } = useCryptoList({ page, perPage: PER_PAGE })
+
+	const handlePrev = () => setPage(prev => Math.max(prev - 1, 1))
+	const handleNext = () => setPage(prev => prev + 1)
+
+	const hasNextPage = data && data.length === PER_PAGE
 
 	if (isLoading) return <div>Loading...</div>
 	if (error) return <div>Error: {error}</div>
@@ -19,7 +29,12 @@ export default function Crypto() {
 						<CryptoCard key={coin.id} coin={coin} />
 					))}
 				</ul>
-                {/* TODO: Add pagination logic — CoinGecko supports page & per_page params */}
+				<Pagination
+					page={page}
+					onPrev={handlePrev}
+					onNext={handleNext}
+					isNextDisabled={!hasNextPage}
+				/>
 			</main>
 			<footer className='row-start-3 flex gap-[24px] flex-wrap items-center justify-center'>
 				<a
