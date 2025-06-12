@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import type { Crypto, PaginationQueryParams } from "@/types"
 import { COINGECKO_MARKET_URL_USD } from "@/lib/constants"
 
@@ -14,11 +14,19 @@ export const useCryptoList = ({
 	const [isLoading, setIsLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
 
+	const controllerRef = useRef<AbortController | null>(null)
+
 	useEffect(() => {
+		if (controllerRef.current) {
+			controllerRef.current.abort()
+		}
+
 		const controller = new AbortController()
+		controllerRef.current = controller
 
 		const fetchData = async () => {
 			setIsLoading(true)
+			setError(null)
 			try {
 				const URL = `${COINGECKO_MARKET_URL_USD}&page=${page}&per_page=${perPage}`
 				const res = await fetch(URL, { signal: controller.signal })
@@ -34,6 +42,9 @@ export const useCryptoList = ({
 				// of the fetched data, but it assumes the API response matches the Crypto type.
 				setData(resData as Crypto[])
 			} catch (err: unknown) {
+				if (err instanceof Error && err.name === "AbortError") {
+					return
+				}
 				if (err instanceof Error) {
 					setError(err.message || "Unknown error")
 				}
@@ -43,7 +54,12 @@ export const useCryptoList = ({
 		}
 
 		fetchData()
-		return () => controller.abort() // Cleanup on deps change
+
+		// Cleanup: abort fetch if component unmounts or before next fetch
+		return () => {
+			controller.abort()
+			controllerRef.current = null
+		}
 	}, [page, perPage])
 
 	return { data, isLoading, error }
