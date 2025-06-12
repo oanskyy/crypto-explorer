@@ -8,4 +8,5 @@ export type PaginationProps = {
 	onPrev: () => void
 	onNext: () => void
 	isNextDisabled?: boolean
+	isPrevDisabled?: boolean
 }

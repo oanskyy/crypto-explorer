@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { useCryptoList } from "@/hooks/useCryptoList"
 import { CryptoCard } from "@/components/CryptoCard"
 import { Pagination } from "@/components/Pagination"
@@ -11,10 +11,18 @@ export default function Crypto() {
 	const [page, setPage] = useState(1)
 	const { data, isLoading, error } = useCryptoList({ page, perPage: PER_PAGE })
 
-	const handlePrev = () => setPage(prev => Math.max(prev - 1, 1))
-	const handleNext = () => setPage(prev => prev + 1)
+	const handleNext = useCallback(() => {
+		if (data && data.length === PER_PAGE) {
+			setPage(prev => prev + 1)
+		}
+	}, [data])
 
-	const hasNextPage = data && data.length === PER_PAGE
+	const handlePrev = useCallback(() => {
+		setPage(prev => Math.max(prev - 1, 1))
+	}, [])
+
+	const isPrevDisabled = page === 1
+	const isNextDisabled = !data || data.length < PER_PAGE
 
 	if (isLoading) return <div>Loading...</div>
 	if (error) return <div>Error: {error}</div>
@@ -31,9 +39,10 @@ export default function Crypto() {
 				</ul>
 				<Pagination
 					page={page}
-					onPrev={handlePrev}
 					onNext={handleNext}
-					isNextDisabled={!hasNextPage}
+					onPrev={handlePrev}
+					isNextDisabled={isNextDisabled}
+					isPrevDisabled={isPrevDisabled}
 				/>
 			</main>
 			<footer className='row-start-3 flex gap-[24px] flex-wrap items-center justify-center'>
