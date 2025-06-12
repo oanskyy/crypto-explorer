@@ -15,11 +15,13 @@ export const useCryptoList = ({
 	const [error, setError] = useState<string | null>(null)
 
 	useEffect(() => {
+		const controller = new AbortController()
+
 		const fetchData = async () => {
 			setIsLoading(true)
 			try {
 				const URL = `${COINGECKO_MARKET_URL}&page=${page}&per_page=${perPage}`
-				const res = await fetch(URL)
+				const res = await fetch(URL, { signal: controller.signal })
 				if (!res.ok) throw new Error("Failed to fetch cryptos")
 
 				const resData = await res.json()
@@ -41,6 +43,7 @@ export const useCryptoList = ({
 		}
 
 		fetchData()
+		return () => controller.abort() // Cleanup on deps change
 	}, [page, perPage])
 
 	return { data, isLoading, error }
