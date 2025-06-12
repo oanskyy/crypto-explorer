@@ -1,7 +1,6 @@
-import Image from "next/image"
 import type { CryptoCardProps } from "@/types"
 import { formatCurrency, formatPercentage } from "@/utils/formatters"
-import { useState } from "react"
+import { ImgWithFallback } from "./ImgWithFallback"
 
 export const CryptoCard = ({ coin }: CryptoCardProps) => {
 	const {
@@ -12,7 +11,6 @@ export const CryptoCard = ({ coin }: CryptoCardProps) => {
 		market_cap,
 		price_change_percentage_24h
 	} = coin
-	const [imgSrc, setImgSrc] = useState(image)
 	const isPriceUp = price_change_percentage_24h >= 0
 
 	return (
@@ -22,14 +20,13 @@ export const CryptoCard = ({ coin }: CryptoCardProps) => {
 		>
 			{/* Left: coin image + name + symbol */}
 			<div className='flex items-center gap-3 min-w-[180px]'>
-				{/* TODO extract ImgWithFallback */}
-				<Image
-					src={imgSrc}
+				<ImgWithFallback
+					src={image}
+					fallbackSrc='/fallback-coin.svg'
 					alt={`${name} logo`}
 					width={32}
 					height={32}
 					style={{ width: 32, height: 32 }}
-					onError={() => setImgSrc("/fallback-coin.svg")}
 				/>
 				<div>
 					<h3 className='font-semibold'>{name}</h3>
