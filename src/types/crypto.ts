@@ -26,3 +26,7 @@ export interface Crypto {
 	roi: null
 	last_updated: Date
 }
+
+export interface CryptoCardProps {
+  coin: Crypto
+}

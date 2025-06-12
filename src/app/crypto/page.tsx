@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image"
 import { useCryptoList } from "@/hooks/useCryptoList"
+import { CryptoCard } from "@/components/CryptoCard"
 
 export default function Crypto() {
 	const { data, isLoading, error } = useCryptoList()
@@ -13,21 +14,12 @@ export default function Crypto() {
 		<div className='grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]'>
 			<main className='flex flex-col gap-[32px] row-start-2 items-center sm:items-start'>
 				Hello from crypto page!
-				<ul>
-					{data?.map(coin => (
-						<li key={coin.id}>
-							{/* TODO style this crypto card component and extract it */}
-							{/* TODO add image */}
-							{coin.image}
-							<br />
-							{/* TODO: parse current price, market cap, price perfcentage */}
-							{coin.name} || {coin.symbol} — ${coin.current_price}
-							{coin.market_cap}
-							<br />
-							{coin.price_change_percentage_24h}
-						</li>
+				<ul className='flex flex-col gap-2'>
+					{data.map(coin => (
+						<CryptoCard key={coin.id} coin={coin} />
 					))}
 				</ul>
+                {/* TODO: Add pagination logic — CoinGecko supports page & per_page params */}
 			</main>
 			<footer className='row-start-3 flex gap-[24px] flex-wrap items-center justify-center'>
 				<a
