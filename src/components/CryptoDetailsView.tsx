@@ -1,4 +1,5 @@
 import { ImgWithFallback } from "@/components/ImgWithFallback"
+import Link from "next/link"
 import type { CryptoDetails } from "@/types"
 
 import { formatCurrency, formatPercentage } from "@/utils/formatters"
@@ -18,6 +19,9 @@ export const CryptoDetailView = ({
 }: CryptoDetails) => {
 	return (
 		<div className='max-w-2xl mx-auto p-6'>
+			<Link href='/crypto' className='text-blue-600 hover:underline'>
+				← Back to list
+			</Link>
 			<div className='flex items-center gap-4'>
 				<ImgWithFallback
 					src={image.large}
