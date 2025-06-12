@@ -4,6 +4,7 @@ import { useCallback, useState } from "react"
 import { useCryptoList } from "@/hooks/useCryptoList"
 import { CryptoCard } from "@/components/CryptoCard"
 import { Pagination } from "@/components/Pagination"
+import Link from "next/link"
 
 const PER_PAGE = 10
 
@@ -34,7 +35,9 @@ export default function Crypto() {
 				Hello from crypto page!
 				<ul className='flex flex-col gap-2'>
 					{data.map(coin => (
-						<CryptoCard key={coin.id} coin={coin} />
+						<Link href={`/crypto/${coin.id}`} key={coin.id}>
+							<CryptoCard coin={coin} />
+						</Link>
 					))}
 				</ul>
 				<Pagination

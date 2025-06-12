@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import type { Crypto, PaginationQueryParams } from "@/types"
-import { COINGECKO_MARKET_URL } from "@/lib/constants"
+import { COINGECKO_MARKET_URL_USD } from "@/lib/constants"
 
 // This hook fetches a list of cryptocurrencies from the CoinGecko API
 // and returns the data, loading state, and any error that occurs during the fetch.
@@ -20,7 +20,7 @@ export const useCryptoList = ({
 		const fetchData = async () => {
 			setIsLoading(true)
 			try {
-				const URL = `${COINGECKO_MARKET_URL}&page=${page}&per_page=${perPage}`
+				const URL = `${COINGECKO_MARKET_URL_USD}&page=${page}&per_page=${perPage}`
 				const res = await fetch(URL, { signal: controller.signal })
 				if (!res.ok) throw new Error("Failed to fetch cryptos")
 

@@ -28,5 +28,23 @@ export interface Crypto {
 }
 
 export interface CryptoCardProps {
-  coin: Crypto
+	coin: Crypto
+}
+export interface CryptoDetails {
+	id: string
+	name: string
+	symbol: string
+	image: { large: string }
+	market_data: {
+		current_price: { usd: number }
+		market_cap: { usd: number }
+		total_supply: number
+		circulating_supply: number
+		price_change_percentage_24h: number
+	}
+	description: { en: string }
+}
+
+export type CryptoDetailsPageParams = {
+	params: Promise<{ id: string }>
 }
