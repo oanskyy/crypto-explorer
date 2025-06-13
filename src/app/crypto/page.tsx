@@ -9,7 +9,7 @@ const PER_PAGE = 10
 
 export default function Crypto() {
 	const [page, setPage] = useState(1)
-	const { data, error } = useCryptoList({ page, perPage: PER_PAGE })
+	const { data } = useCryptoList({ page, perPage: PER_PAGE })
 
 	const handleNext = useCallback(() => {
 		if (data && data.length === PER_PAGE) {
@@ -24,14 +24,15 @@ export default function Crypto() {
 	const isPrevDisabled = page === 1
 	const isNextDisabled = !data || data.length < PER_PAGE
 
-	if (error) {
+	if (!data || data.length === 0)
 		return (
-			<div className='text-center text-red-600 p-4 bg-red-100 rounded'>
-				Failed to load data. Please try again.
-			</div>
+			<div className='text-center text-gray-500 p-8'>No data available</div>
 		)
-	}
-	if (!data || data.length === 0) return <div>No data available</div>
+	// if (data && data.length === 0) {
+	// 	return (
+	// 		<div className='text-center text-gray-500 p-8'>No results found.</div>
+	// 	)
+	// }
 
 	return (
 		<div className='grid items-center justify-items-center min-h-screen p-8  md:p-20 pb-20 gap-8 '>

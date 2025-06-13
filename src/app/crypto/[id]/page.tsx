@@ -7,6 +7,7 @@ export default async function CryptoDetailsPage({
 	params
 }: CryptoDetailsPageParams) {
 	// asynchronous access of `params.id`.
+	
 	const { id } = await params
 	const data = await getCryptoById(id)
 

@@ -11,7 +11,7 @@ export default function Error({
 }) {
 	return (
 		<ErrorFallback
-			title='Failed to load crypto list'
+			title='Failed to load crypto details'
 			message={error.message || "An unexpected error occurred."}
 			onClick={reset}
 			actionLabel='Try Again'
