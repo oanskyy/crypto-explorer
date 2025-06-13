@@ -29,7 +29,9 @@ export const CryptoCard = ({ coin }: CryptoCardProps) => {
 					style={{ width: 32, height: 32 }}
 				/>
 				<div>
-					<h3 className='font-semibold'>{name}</h3>
+					<h3 className='font-semibold truncate max-w-[130px]' title={name}>
+						{name}
+					</h3>
 					<span className='text-xs text-gray-500 uppercase'>{symbol}</span>
 				</div>
 			</div>
