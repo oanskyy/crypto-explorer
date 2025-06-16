@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { getCryptoById } from "@/lib/crypto"
+import { getCryptoById } from "@/lib/fetchCryptoById"
 import { CryptoDetailView } from "@/components/CryptoDetailsView"
 import type { CryptoDetailsPageParams } from "@/types"
 import type { Metadata } from "next"

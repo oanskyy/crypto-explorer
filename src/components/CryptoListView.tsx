@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
+import { useCryptoListQuery } from "@/hooks/useCryptoListQuery"
 import { useCallback, useState } from "react"
-import { useCryptoList } from "@/hooks/useCryptoList"
 import { CryptoCard } from "@/components/CryptoCard"
 import { Pagination } from "@/components/Pagination"
 import { ErrorFallback } from "@/components/ErrorFallback"
@@ -11,10 +11,7 @@ const PER_PAGE = 10
 
 export default function CryptoListView() {
 	const [page, setPage] = useState(1)
-	const { data, isLoading, error, refetch } = useCryptoList({
-		page,
-		perPage: PER_PAGE
-	})
+	const { data, isLoading, error, refetch } = useCryptoListQuery(page, PER_PAGE)
 
 	const handleNext = useCallback(() => {
 		if (data && data.length === PER_PAGE) {
@@ -35,7 +32,7 @@ export default function CryptoListView() {
 		return (
 			<ErrorFallback
 				title='Failed to load crypto list'
-				message={error}
+				message={error.message || "An unexpected error occurred."}
 				onClick={() => refetch()}
 				actionLabel='Try Again'
 			/>
@@ -43,8 +40,8 @@ export default function CryptoListView() {
 	}
 
 	return (
-		<div className='grid items-center justify-items-center min-h-screen p-8  md:p-20 pb-20 gap-8 '>
-			<main className='flex flex-col gap-2 items-center '>
+		<div className='grid items-center justify-items-center min-h-screen p-8  md:p-20 pb-20 gap-8'>
+			<main className='flex flex-col gap-2 items-center'>
 				<span className='flex flex-col items-center gap-2'>
 					<h1 className='text-2xl font-bold'>Cryptocurrency List</h1>
 					<p className='text-gray-600'>
