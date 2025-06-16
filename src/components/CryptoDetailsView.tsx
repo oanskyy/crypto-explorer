@@ -51,13 +51,14 @@ export const CryptoDetailView = ({
 					24h Change: {formatPercentage(price_change_percentage_24h)}
 				</p>
 			</div>
-
-			<div className='mt-6'>
-				<h2 className='text-lg font-medium'>Description</h2>
-				<p className='text-sm text-gray-700 mt-2'>
-					{description.en?.split(".")[0] + "."}
-				</p>
-			</div>
+			{description?.en && description.en.trim() !== "." && (
+				<div className='mt-6'>
+					<h2 className='text-lg font-medium'>Description</h2>
+					<p className='text-sm text-gray-700 mt-2'>
+						{description.en.split(".")[0].trim() + "."}
+					</p>
+				</div>
+			)}
 		</div>
 	)
 }
