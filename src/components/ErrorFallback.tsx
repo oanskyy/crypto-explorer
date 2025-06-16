@@ -2,7 +2,7 @@
 
 interface ErrorFallbackProps {
 	title?: string
-	message?: string
+	message?: string 
 	actionLabel?: string
 	onClick?: () => void
 }
