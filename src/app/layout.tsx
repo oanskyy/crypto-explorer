@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadataa: Metadata = {
+export const metadata: Metadata = {
   title: "Crypto Dashboard",
   description: "Explore cryptocurrency data in real-time.",
 }
