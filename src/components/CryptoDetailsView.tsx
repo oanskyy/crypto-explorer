@@ -19,10 +19,13 @@ export const CryptoDetailView = ({
 }: CryptoDetails) => {
 	return (
 		<div className='max-w-2xl mx-auto p-6'>
-			<Link href='/crypto' className='text-blue-600 hover:underline'>
+			<Link
+				href='/crypto'
+				className='rounded-md bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-400'
+			>
 				← Back to list
 			</Link>
-			<div className='flex items-center gap-4'>
+			<div className='flex items-center gap-4 mt-6'>
 				<ImgWithFallback
 					src={image.large}
 					fallbackSrc='/placeholder.png'

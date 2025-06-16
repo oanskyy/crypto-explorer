@@ -9,8 +9,9 @@ export default async function CryptoDetailsPage({
 	// asynchronous access of `params.id`.
 	
 	const { id } = await params
+	if (!id || typeof id !== "string") return notFound()
+		
 	const data = await getCryptoById(id)
-
 	if (!data) return notFound()
 
 	return <CryptoDetailView {...data} />
